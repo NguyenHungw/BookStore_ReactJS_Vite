@@ -6,9 +6,9 @@ import React from 'react';
 
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
-      <App />
+    <App/>
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode> 
 )
