@@ -13,8 +13,12 @@ import Footer from './components/footer';
 import Home from './components/home';
 import RegisterPage from './pages/register';
 import { callFetchAccount } from './services/api.service';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { dogetAccountAction } from './redux/account/accountSlice';
+import Loading from './components/loading';
+import ErrorPage from './components/ErrorPage';
+import AdminPage from './pages/admin';
+import ProtectedRoute from './components/protectedRoute';
 
 const Layout = () =>{
   return (
@@ -28,7 +32,9 @@ const Layout = () =>{
 
 export default function App() {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.account.isAuthenticated)
   const getAccount = async () =>{
+    if(window.location.pathname === '/login') return; // neu là trang login thì không gọi api này
     const res = await callFetchAccount()
     if(res && res.data){
       dispatch(dogetAccountAction(res.data))
@@ -44,12 +50,38 @@ export default function App() {
       
       path: "/",
       element: <Layout/>,
-      errorElement: <>404 not found</>,
+      errorElement: <ErrorPage/>,
       children: [
         { index: true, element: <Home /> },
 
         {
           path: "contact",
+          element: <Contact />,
+        },
+        {
+          path: "books",
+          element: <BookPage />,
+        }
+      ],
+  
+    },
+    {
+      
+      path: "/admin",
+      element: <Layout/>,
+      errorElement: <ErrorPage/>,
+      children: [
+        { 
+          index: true, 
+          element: 
+          <ProtectedRoute>
+          <AdminPage /> 
+          </ProtectedRoute>
+          
+        },
+
+        {
+          path: "user",
           element: <Contact />,
         },
         {
@@ -74,7 +106,16 @@ export default function App() {
   ]);
   return(
     <>
+    {isAuthenticated === true || 
+    window.location.pathname === '/login' ||
+    window.location.pathname === '/admin'
+     ?
       <RouterProvider router={router} />
+      :
+      <Loading/>
+    }
+    
+      {/* <RouterProvider router={router} /> */}
     </>
   )
 }
