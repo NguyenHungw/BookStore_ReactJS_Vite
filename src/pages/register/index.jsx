@@ -28,9 +28,9 @@ const RegisterPage = () =>{
 
       };
 
-      const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-      };
+      // const onFinishFailed = (errorInfo) => {
+      //   console.log('Failed:', errorInfo);
+      // };
 // console.log("check fullname>>>",fullname)
     return (
 

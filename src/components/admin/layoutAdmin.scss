@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+    // background-color: #F5F5F5;
+}
+.header-container{
+    .header-rightside{
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 20px;
+        font-size: 18px;
+    }
+}

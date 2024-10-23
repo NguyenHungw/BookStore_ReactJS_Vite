@@ -27,6 +27,9 @@ const registerUserAPI = (fullname,email,password,phone) => {
 const callFetchAccount = () => {
     return axios.get('/api/v1/auth/account')
 }
+const callLogOutAccount = () => {
+    return axios.post('/api/v1/auth/logout')
+}
 
-export {loginUserAPI,registerUserAPI,callFetchAccount
+export {loginUserAPI,registerUserAPI,callFetchAccount,callLogOutAccount
 }

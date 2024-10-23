@@ -19,6 +19,7 @@ import Loading from './components/loading';
 import ErrorPage from './components/ErrorPage';
 import AdminPage from './pages/admin';
 import ProtectedRoute from './components/protectedRoute';
+import LayoutAdmin from './components/admin/layoutAdmin';
 
 const Layout = () =>{
   return (
@@ -30,9 +31,26 @@ const Layout = () =>{
   )
 }
 
+// const LayoutAdmin = () => {
+//   const isAdminRoute = window.location.pathname.startsWith('/admin');
+//   const user = useSelector(state => state.account.user);
+//   const userRole = user.role;
+
+//   return (
+//     <div className='layout-app2'>
+//     {isAdminRoute && userRole === 'ADMIN' && <Header />}
+//     {/* <Header /> */}
+//     <Outlet />
+//     {/* <Footer /> */}
+//     {isAdminRoute && userRole === 'ADMIN' && <Footer />}
+
+//   </div>
+
+//   )
+// }
 export default function App() {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.account.isAuthenticated)
+  const isLoading = useSelector(state => state.account.isLoading)
   const getAccount = async () =>{
     if(window.location.pathname === '/login') return; // neu là trang login thì không gọi api này
     const res = await callFetchAccount()
@@ -68,12 +86,11 @@ export default function App() {
     {
       
       path: "/admin",
-      element: <Layout/>,
+      element: <LayoutAdmin/>,
       errorElement: <ErrorPage/>,
       children: [
         { 
-          index: true, 
-          element: 
+          index: true,element: 
           <ProtectedRoute>
           <AdminPage /> 
           </ProtectedRoute>
@@ -106,9 +123,12 @@ export default function App() {
   ]);
   return(
     <>
-    {isAuthenticated === true || 
+    {isLoading === false || 
     window.location.pathname === '/login' ||
-    window.location.pathname === '/admin'
+    window.location.pathname === '/register'||
+
+    window.location.pathname === '/'
+
      ?
       <RouterProvider router={router} />
       :
