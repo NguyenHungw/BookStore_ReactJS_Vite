@@ -45,15 +45,14 @@ instance.interceptors.response.use(function (response) {
     return response;
   },async function (error) {
     
-   
+   //gán lại refresh
       if (error.config 
         && error.response 
         && +error.response.status === 401 
         &&!error.config.headers[NO_RETRY_HEADER] ) {
-
         const access_token = await handleRefreshToken()
         error.config.headers[NO_RETRY_HEADER] = 'true' // string val only
-
+        // mặc định NO_RETRY_HEADER ko được gán thì sẽ = null hoặc undifine
 
         if(access_token){
 
@@ -61,9 +60,22 @@ instance.interceptors.response.use(function (response) {
           localStorage.setItem('access_token',access_token)
           return instance.request(error.config);
         }
+       
       }
-    
-    
+      //check hết hạn
+      if (error.config 
+        && error.response 
+        && +error.response.status === 400
+        && error.config.url=== '/api/v1/auth/refresh' 
+      ){
+        //check neeus ko phai nhung duong dan nay thi moi check refresh token
+        const validPaths = ['/','/book','/contact','/ErrorPage','/book/:slug','/test'];
+        //const validPaths = ['books'];
+        if (!validPaths.includes(window.location.pathname)) {
+          window.location.href = '/login';
+        }}
+        
+     
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     //console.log("check error respo1 >>",error.response)

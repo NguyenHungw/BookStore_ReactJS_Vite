@@ -1,7 +1,8 @@
+
 const AdminPage = () => {
     return (
         <>
-            AdminDashBoard
+           admin dashboard
         </>
     )
 }

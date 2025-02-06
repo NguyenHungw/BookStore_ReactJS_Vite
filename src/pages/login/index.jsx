@@ -10,7 +10,7 @@ const LoginPage = () =>{
     const dispatch = useDispatch();
     const onFinish = async (values) => {
         
-            console.log('Success:', values);
+            // console.log('Success:', values);
             
             const res = await loginUserAPI(values.email, values.password);
            

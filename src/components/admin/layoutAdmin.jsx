@@ -96,8 +96,12 @@ const LayoutAdmin = () => {
     ];
     return (
   
-    <Layout>
-    <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout  style={{ minHeight: '100vh' }}
+            className="layout-admin">
+    <Sider 
+    theme='light'
+    trigger={null} collapsible collapsed={collapsed}
+    >
       <div className="demo-logo-vertical" />
       <Menu
         theme="light"
@@ -125,12 +129,13 @@ const LayoutAdmin = () => {
                     </Dropdown>
 
         </div>
+        
       </div>
      
       dashboard
+      <Outlet/>
     </Layout>
-  <Footer></Footer>
-
+  <Footer/>
   </Layout>
  
     )

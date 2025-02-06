@@ -4,8 +4,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import LoginPage from './pages/login';
-import Contact from './components/contact';
-import BookPage from './components/books';
+import Contact from './pages/contact';
+// import BookPage from './components/books';
 
 import { Outlet } from "react-router-dom";
 import Header from './components/header';
@@ -17,9 +17,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dogetAccountAction } from './redux/account/accountSlice';
 import Loading from './components/loading';
 import ErrorPage from './components/ErrorPage';
-import AdminPage from './pages/admin';
 import ProtectedRoute from './components/protectedRoute';
 import LayoutAdmin from './components/admin/layoutAdmin';
+import ManageUserPage from './pages/admin/user/index';
+import AdminPage from './pages/admin/index';
+import ManageBookPage from './pages/admin/book';
+import BookPage from './pages/book';
+import PreviousValueTracker from './pages/test';
 
 const Layout = () =>{
   return (
@@ -31,23 +35,6 @@ const Layout = () =>{
   )
 }
 
-// const LayoutAdmin = () => {
-//   const isAdminRoute = window.location.pathname.startsWith('/admin');
-//   const user = useSelector(state => state.account.user);
-//   const userRole = user.role;
-
-//   return (
-//     <div className='layout-app2'>
-//     {isAdminRoute && userRole === 'ADMIN' && <Header />}
-//     {/* <Header /> */}
-//     <Outlet />
-//     {/* <Footer /> */}
-//     {isAdminRoute && userRole === 'ADMIN' && <Footer />}
-
-//   </div>
-
-//   )
-// }
 export default function App() {
   const dispatch = useDispatch();
   const isLoading = useSelector(state => state.account.isLoading)
@@ -58,10 +45,8 @@ export default function App() {
       dispatch(dogetAccountAction(res.data))
     }
   }
-  useEffect(()=>{
+  useEffect( ()=>{
     getAccount();
-
-
   },[])
   const router = createBrowserRouter([
     {
@@ -77,8 +62,12 @@ export default function App() {
           element: <Contact />,
         },
         {
-          path: "books",
+          path: "book/:slug",
           element: <BookPage />,
+        },
+        {
+          path: "test",
+          element: <PreviousValueTracker />,
         }
       ],
   
@@ -86,24 +75,27 @@ export default function App() {
     {
       
       path: "/admin",
-      element: <LayoutAdmin/>,
+      element: <ProtectedRoute><LayoutAdmin/></ProtectedRoute> ,
       errorElement: <ErrorPage/>,
       children: [
         { 
           index: true,element: 
           <ProtectedRoute>
           <AdminPage /> 
-          </ProtectedRoute>
+          </ProtectedRoute>,
           
         },
 
         {
           path: "user",
-          element: <Contact />,
+          element:  <ManageUserPage/> ,
+          // <ProtectedRoute>
+          // <ManageUserPage /> 
+          // </ProtectedRoute>,
         },
         {
-          path: "books",
-          element: <BookPage />,
+          path: "book",
+          element: <ManageBookPage />,
         }
       ],
   
@@ -126,7 +118,6 @@ export default function App() {
     {isLoading === false || 
     window.location.pathname === '/login' ||
     window.location.pathname === '/register'||
-
     window.location.pathname === '/'
 
      ?
