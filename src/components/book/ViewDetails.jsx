@@ -1,6 +1,6 @@
 import ImageGallery from "react-image-gallery";
 import './style.scss'
-import { Row } from "antd";
+import { Button, Row } from "antd";
 const ViewDetails = () =>{
   const handleOnClickImage = () =>{
 
@@ -38,8 +38,23 @@ const ViewDetails = () =>{
           slideOnThumbnailOver={true}  //onHover => auto scroll images
           onClick={() => handleOnClickImage()}
           />
+
+        <div className="detail-info-book">
+                
+          <p>Tác giả:</p>
+          <p>Đánh Giá:</p>
+          <p>Vận Chuyển:</p>
+          <p>Số Lượng:</p>
+          <Button>Thêm vào giỏ hàng</Button>
+          <Button>Mua Ngay</Button>
+            
+          </div>
           </Row>
+         
       </div>
+      
+  
+      
    
     )
 }

@@ -1,16 +1,38 @@
 @import "react-image-gallery/styles/css/image-gallery.css";
 
-.view-detail-book{
-    
-     border: 1px solid red;
-    // width: 500;
-    .original-image,
-    .thumbnail-image {
-        cursor: pointer;
+
+    .view-detail-book{
         
-    }
+        background-color: #efefefe7;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+        
+        .detail-info-book{
+            margin-left: 40px;
+        }
+
+        .image-gallery{
+            margin-left: 10px;
+            width: 600px;
+        }
     
-}
+        border: 1px solid red;
+       // width: 500;
+       .original-image{
+           cursor: pointer;
+      
+       }
+       .thumbnail-image {
+           cursor: pointer;
+       
+           
+       }
+       
+       
+   }
+   
+
 
 .modal-gallery {
     .active {
