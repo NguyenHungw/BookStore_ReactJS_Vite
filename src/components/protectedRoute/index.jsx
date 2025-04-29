@@ -6,8 +6,6 @@ import { dogetAccountAction } from "../../redux/account/accountSlice";
 import Loading from "../loading";
 
 const RoleBaseRoute = (props) => {
-
-   
     const isAdminRoute = window.location.pathname.startsWith('/admin');
     const user = useSelector(state => state.account.user);
     const userRole = user.role;
@@ -22,8 +20,7 @@ const RoleBaseRoute = (props) => {
 
 const ProtectedRoute = (props) => {
     const [isLoading, setIsLoading] = useState(true);
-    console.log('running ProtectedRoute')
-
+    console.log('running ProtectedRoute');
     //thêm thời gian đợi vì khi f5 lại trang redux chưa kịp gán data nên phải đợi nó gán xong
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -33,7 +30,6 @@ const ProtectedRoute = (props) => {
         // Xóa timer khi component unmount
         return () => clearTimeout(timer);
     }, []);
-
 
 
     console.log("check props protected",props)
@@ -48,7 +44,6 @@ const ProtectedRoute = (props) => {
     console.log("isAuthenticated:", isAuthenticated); // Kiểm tra giá trị
 
     return (
-        
         <>
             {isAuthenticated === true ?
                 <>
@@ -58,7 +53,6 @@ const ProtectedRoute = (props) => {
                 </>
                 :
                 <Navigate to='/' replace />
-                
             }
         </>
     )

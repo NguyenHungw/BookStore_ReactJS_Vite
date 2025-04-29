@@ -62,6 +62,8 @@ instance.interceptors.response.use(function (response) {
         }
        
       }
+
+
       //check hết hạn
       if (error.config 
         && error.response 
@@ -70,10 +72,15 @@ instance.interceptors.response.use(function (response) {
       ){
         //check neeus ko phai nhung duong dan nay thi moi check refresh token
         const validPaths = ['/','/book','/contact','/ErrorPage','/book/:slug','/test'];
+
+        const bookRegex = /^\/book\/[^/]+$/; // Regex kiểm tra đường dẫn dạng /book/slug
+
         //const validPaths = ['books'];
-        if (!validPaths.includes(window.location.pathname)) {
+        if (!validPaths.includes(window.location.pathname) && !bookRegex.test(window.location.pathname)) {
           window.location.href = '/login';
-        }}
+        }
+        
+      }
         
      
     // Any status codes that falls outside the range of 2xx cause this function to trigger
